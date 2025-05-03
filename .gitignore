@@ -1,0 +1,61 @@
+# Ignore PDF files
+*.pdf
+
+# Ignore large model files  
+*.bin
+*.h5
+*.model
+*.pt
+*.pth
+*.safetensors
+*.onnx
+
+# HuggingFace cache
+.cache/
+cache/
+huggingface/
+.huggingface/
+
+# Optional: directories containing data
+/data/
+/datasets/
+/models/
+
+# Python environment
+/rag/
+/venv/
+/env/
+/.env/
+
+# Ignore Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints
+
+# Thêm các thư mục chứa PDF nếu có 
+
+# Python env
+rag_env/
+venv/
+env/
+.env/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Large data files
+rag_langchain/data_source/generative_ai/*.pdf
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
