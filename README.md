@@ -47,9 +47,8 @@ rag_langchain
 └── README.md
 ```
 
-## Truy cập link https://drive.google.com/drive/folders/1q1GOhzxcVLs33RDn5WzidPS7dRMu4Xuy?hl=vi
 
-## Sử dụng link https://s.pro.vn/OzL8 để lấy tài liệu pdf -> thêm vào file genetive_ai
+# Sử dụng link https://s.pro.vn/OzL8 để lấy tài liệu pdf -> thêm vào file genetive_ai
 
 ### Triển khai toàn bộ hệ thống (API và UI)
 
