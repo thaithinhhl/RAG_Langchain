@@ -9,7 +9,7 @@ Hệ thống RAG (Retrieval-Augmented Generation) này cho phép người dùng 
 - **LangChain**: Framework để phát triển các ứng dụng AI tổng hợp
 - **FastAPI**: Web framework hiệu suất cao
 - **LangServe**: Triển khai chuỗi LangChain dưới dạng API
-- **Gradio**: Giao diện người dùng thân thiện
+- **Gradio**: Giao diện 
 
 ## Cài đặt
 
@@ -27,7 +27,7 @@ pip install -r requirements.txt
 ### Cấu trúc thư mục
 
 ```
-.
+rag_langchain
 ├── data_source/
 │   └── generative_ai/  # Thư mục chứa tài liệu PDF
 ├── src/
@@ -37,11 +37,19 @@ pip install -r requirements.txt
 │   │   └── llm_model.py   # Mô hình LLM
 │   └── rag/
 │       └── main.py     # Xây dựng RAG Chain
+|       └── app.py
+|       └── file_loader.py
+|       └── main.py
+|       └── offline_rag.py
+|       └── vecrostore.py
+|         
 ├── deploy.py          # Script triển khai
 └── README.md
 ```
 
-## Sử dụng
+## Truy cập link https://drive.google.com/drive/folders/1q1GOhzxcVLs33RDn5WzidPS7dRMu4Xuy?hl=vi
+
+## Sử dụng link https://s.pro.vn/OzL8 để lấy tài liệu pdf -> thêm vào file genetive_ai
 
 ### Triển khai toàn bộ hệ thống (API và UI)
 
