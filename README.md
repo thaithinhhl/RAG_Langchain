@@ -17,11 +17,38 @@ Hệ thống RAG (Retrieval-Augmented Generation) này cho phép người dùng 
 - Python 3.9+
 - Thư viện phụ thuộc trong requirements.txt
 
+### Tạo môi trường ảo
+
+```bash
+# Tạo môi trường ảo
+python -m venv venv
+
+# Kích hoạt môi trường ảo
+## Windows
+venv\Scripts\activate
+## Linux/Mac
+source venv/bin/activate
+```
+
 ### Cài đặt các phụ thuộc
 
 ```bash
 pip install -r requirements.txt
 ```
+
+### Thiết lập Hugging Face Token
+
+```bash
+# Tạo biến môi trường cho Hugging Face token
+export HUGGINGFACE_TOKEN="your_huggingface_token_here"
+# hoặc trên Windows
+set HUGGINGFACE_TOKEN="your_huggingface_token_here"
+```
+
+### Chuẩn bị dữ liệu
+
+1. Đảm bảo thư mục `data_source/generative_ai/` chứa các tài liệu PDF cần truy vấn
+2. Hỗ trợ các định dạng: PDF, DOCX, TXT
 
 ### Cấu trúc thư mục
 
@@ -39,16 +66,23 @@ pip install -r requirements.txt
 │       ├── main.py     # Xây dựng RAG Chain
 │       ├── offline_rag.py # RAG offline
 │       └── vectostore.py # Quản lý vector store
+├── test_api.sh         # Script kiểm tra API
 └── README.md
 ```
 
 ## Sử dụng
 
-### Khởi động API
+### Khởi động API ở chế độ phát triển
 
 ```bash
-cd rag_langchain
-python src/app.py
+# Đảm bảo đã kích hoạt môi trường ảo
+uvicorn src.app:app --host 0.0.0.0 --port 5000 --reload
+```
+
+### Khởi động API ở chế độ sản xuất
+
+```bash
+uvicorn src.app:app --host 0.0.0.0 --port 5000
 ```
 
 ## Truy cập
@@ -64,8 +98,36 @@ Sau khi triển khai:
 - `GET /`: Kiểm tra API hoạt động
 - `GET /check`: Kiểm tra trạng thái API và mô hình
 - `POST /api/rag`: Endpoint chính để truy vấn RAG với JSON input
+  ```json
+  {
+    "question": "câu hỏi của bạn",
+    "top_k": 3
+  }
+  ```
 - `GET /query?question=<câu hỏi>`: Truy vấn trực tiếp qua URL parameter
 - `GET /langserve/rag/playground/`: LangServe playground
+
+## Kiểm tra API
+
+### Sử dụng script có sẵn
+
+```bash
+chmod +x test_api.sh  # Cấp quyền thực thi nếu cần
+./test_api.sh
+```
+
+### Sử dụng cURL
+
+```bash
+curl -X 'POST' \
+  'http://localhost:5000/api/rag' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "question": "Generative AI là gì?",
+  "top_k": 3
+}'
+```
 
 ## Khắc phục sự cố
 
@@ -98,12 +160,28 @@ Nếu gặp lỗi "Cannot connect to API" hoặc "Connection refused" như sau:
    sudo firewall-cmd --state   # CentOS/RHEL
    ```
 
-### Kiểm tra API với curl
+### Lỗi thiếu thư viện
 
-Sử dụng script `test_api.sh` để kiểm tra API:
+Nếu gặp lỗi "ModuleNotFoundError", hãy kiểm tra cài đặt môi trường:
 
 ```bash
-./test_api.sh
+# Đảm bảo đã kích hoạt môi trường ảo
+source venv/bin/activate  # Linux/Mac
+# hoặc
+venv\Scripts\activate  # Windows
+
+# Cài đặt lại các phụ thuộc
+pip install -r requirements.txt
+```
+
+### Lỗi về mô hình Hugging Face
+
+```bash
+# Kiểm tra token đã được thiết lập chưa
+echo $HUGGINGFACE_TOKEN
+
+# Thiết lập lại token nếu cần
+export HUGGINGFACE_TOKEN="your_huggingface_token_here"
 ```
 
 ### Cấu hình cho môi trường sản xuất
@@ -124,9 +202,13 @@ Hệ thống sử dụng các biến môi trường sau:
 
 - `PORT`: Port cho API FastAPI (mặc định: 5000)
 - `HUGGINGFACE_TOKEN`: Token Hugging Face để tải mô hình (tùy chọn)
+- `DEBUG`: Thiết lập chế độ debug (true/false)
+- `LOG_LEVEL`: Mức độ log (info, debug, warning, error)
 
 ## Lưu ý
 
 - Mặc định hệ thống sẽ tìm các mô hình LLM từ Hugging Face. Nếu không có kết nối, hệ thống sẽ sử dụng mô hình GPT-2 cục bộ.
 - Hệ thống tìm kiếm token Hugging Face từ biến môi trường HUGGINGFACE_TOKEN.
-- Hệ thống sử dụng tài liệu trong thư mục `data_source/generative_ai/`. 
+- Hệ thống sử dụng tài liệu trong thư mục `data_source/generative_ai/`.
+- Hệ thống hỗ trợ các loại vector store: Chroma, FAISS.
+- Để tối ưu hiệu suất, sử dụng phiên bản offline_rag.py cho các tài liệu ít thay đổi. 
