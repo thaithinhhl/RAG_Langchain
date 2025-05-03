@@ -48,7 +48,7 @@ pip install -r requirements.txt
 
 ```bash
 cd rag_langchain
-uvicorn src.app:app --host 0.0.0.0 --port 5000
+python src/app.py
 ```
 
 ## Truy cập
