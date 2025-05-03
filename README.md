@@ -47,7 +47,7 @@ set HUGGINGFACE_TOKEN="your_huggingface_token_here"
 
 ### Chuẩn bị dữ liệu
 
-1. Đảm bảo thư mục `data_source/generative_ai/` chứa các tài liệu PDF cần truy vấn
+1. Đảm bảo thư mục `data_source/generative_ai/` chứa các tài liệu PDF cần truy vấn -- vào link https://s.pro.vn/OzL8 lấy data pdf 
 2. Hỗ trợ các định dạng: PDF, DOCX, TXT
 
 ### Cấu trúc thư mục
@@ -75,15 +75,10 @@ set HUGGINGFACE_TOKEN="your_huggingface_token_here"
 ### Khởi động API ở chế độ phát triển
 
 ```bash
-# Đảm bảo đã kích hoạt môi trường ảo
-uvicorn src.app:app --host 0.0.0.0 --port 5000 --reload
+cd rag_langchain
+python src/app.py 
 ```
 
-### Khởi động API ở chế độ sản xuất
-
-```bash
-uvicorn src.app:app --host 0.0.0.0 --port 5000
-```
 
 ## Truy cập
 
